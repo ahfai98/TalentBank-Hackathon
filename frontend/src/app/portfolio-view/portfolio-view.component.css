@@ -1,1 +1,52 @@
-/* Styles live in src/styles.css */
+/* Distinct card border colors based on index – applied via style binding in template */
+/* The main card styles are already in styles.css, we add extra overrides */
+
+.portfolio-card {
+  transition: all 0.2s ease;
+  border-top-width: 3px;
+  border-top-style: solid;
+  background: linear-gradient(145deg, var(--surface) 0%, var(--surface2) 100%);
+}
+
+/* Collapsed state – hide body, reduce shadow */
+.portfolio-card.card-collapsed .portfolio-card-body {
+  display: none;
+}
+
+.portfolio-card.card-collapsed {
+  opacity: 0.85;
+}
+
+/* Collapse indicator */
+.collapse-icon {
+  margin-left: 0.75rem;
+  font-size: 0.7rem;
+  color: var(--muted);
+  transition: transform 0.2s;
+}
+
+.portfolio-card-head {
+  cursor: pointer;
+  user-select: none;
+}
+
+.portfolio-card-head:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+/* Ensure HR button doesn't trigger collapse */
+.btn-hr {
+  position: relative;
+  z-index: 2;
+  cursor: pointer;
+}
+
+/* Remove default button styling for course link */
+.course-link {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.7rem;
+  color: var(--blue);
+  text-decoration: underline;
+}

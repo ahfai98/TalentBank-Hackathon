@@ -1,0 +1,67 @@
+<div class="page-shell">
+  <nav class="topnav">
+    <div class="topnav-logo">⚠<span>Risk</span>Radar</div>
+    <div class="topnav-sep"></div>
+    <span class="topnav-crumb">HR Dashboard</span>
+    <div class="topnav-right">
+      <a routerLink="/employees" class="nav-link">Employee List</a>
+      <span class="badge-live">System Active</span>
+    </div>
+  </nav>
+
+  <main class="page-content">
+    <div class="section-header">
+      <div class="section-eyebrow">HR Overview</div>
+      <h1 class="section-title">Portfolio Dashboard</h1>
+      <p class="section-sub">
+        Generated portfolios for employees you have analysed. Go to
+        <strong>Employee List</strong> to select employees and generate portfolios.
+      </p>
+    </div>
+
+    @let stored = portfolioState.portfolios();
+    @if (stored.length === 0) {
+      <div class="empty-state">
+        <div class="empty-icon">📋</div>
+        <div class="empty-title">No portfolios yet</div>
+        <div class="empty-desc">
+          Head to the Employee List, select high‑risk employees,
+          and click "Generate Portfolios". Results will appear here automatically.
+        </div>
+        <a routerLink="/employees" class="btn btn-primary" style="margin-top: 1.5rem; display: inline-block;">
+          Go to Employee List →
+        </a>
+      </div>
+    } @else {
+      <div class="dashboard-grid">
+        @for (item of stored; track item.employeeId) {
+          <div class="dashboard-card">
+            <div class="card-header">
+              <div class="emp-avatar">
+                {{ item.portfolio.employeeName.charAt(0) }}{{ item.portfolio.employeeName.split(' ')[1]?.charAt(0) || '' }}
+              </div>
+              <div class="emp-info">
+                <div class="emp-name">{{ item.portfolio.employeeName }}</div>
+                <div class="emp-role">{{ item.portfolio.currentJob }}</div>
+              </div>
+              <span class="match-count-badge">{{ item.portfolio.matches.length }} match(es)</span>
+            </div>
+            <div class="card-body">
+              <div class="status-badge" [class]="item.portfolio.matches.length > 0 ? 'matched' : 'none'">
+                {{ item.portfolio.matches.length > 0 ? 'Matches found' : 'No match' }}
+              </div>
+              <div class="type-tag" [class]="item.portfolio.type === 'same-field' ? 'type-same-field' : 'type-cross-role'">
+                {{ item.portfolio.type === 'same-field' ? 'Same Field' : 'Cross‑Role' }}
+              </div>
+            </div>
+            <div class="card-footer">
+              <a [routerLink]="['/portfolio']" [queryParams]="{ ids: item.employeeId }" class="btn-view">
+                View Full Portfolio →
+              </a>
+            </div>
+          </div>
+        }
+      </div>
+    }
+  </main>
+</div>

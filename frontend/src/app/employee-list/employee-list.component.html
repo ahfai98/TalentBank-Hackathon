@@ -6,6 +6,7 @@
     <div class="topnav-sep"></div>
     <span class="topnav-crumb">Workforce Risk Assessment</span>
     <div class="topnav-right">
+      <a routerLink="/dashboard" class="nav-link">Dashboard</a>
       <span class="badge-live">System Active</span>
     </div>
   </nav>
@@ -24,7 +25,7 @@
       <div class="stat-bar fade-up fade-up-1">
         <div class="stat-item">
           <span class="stat-label">Total Flagged</span>
-          <span class="stat-value danger">{{ employees().length }}</span>
+          <span class="stat-value danger">{{ filteredEmployees().length }}</span>
         </div>
         <div class="stat-item">
           <span class="stat-label">Critical (≥90%)</span>
@@ -41,6 +42,14 @@
       </div>
     }
 
+    <!-- Filter bar -->
+    <div class="filter-bar fade-up fade-up-1">
+      <input type="text"
+        placeholder="Search by name or ID..."
+        [(ngModel)]="searchTerm"
+        (input)="applyFilter()">
+    </div>
+
     <!-- Toolbar -->
     <div class="toolbar fade-up fade-up-2">
       <div class="toolbar-left">
@@ -51,7 +60,7 @@
             (change)="toggleAll($event)">
         </div>
         <span class="select-count">
-          <strong>{{ selectedCount() }}</strong> of {{ employees().length }} selected
+          <strong>{{ selectedCount() }}</strong> of {{ filteredEmployees().length }} selected
         </span>
       </div>
       <div class="toolbar-right">
@@ -84,11 +93,11 @@
             <div class="skeleton" style="height:4px;width:100%;border-radius:2px"></div>
           </div>
         }
-      } @else if (employees().length === 0) {
+      } @else if (filteredEmployees().length === 0) {
         <div class="empty-state">
           <div class="empty-icon">✓</div>
-          <div class="empty-title">No high-risk employees found</div>
-          <div class="empty-desc">All employees are in roles with low AI displacement risk.</div>
+          <div class="empty-title">No matching employees</div>
+          <div class="empty-desc">Try a different search term or refresh the list.</div>
         </div>
       } @else {
         <table class="data-table">
@@ -102,7 +111,7 @@
             </tr>
           </thead>
           <tbody>
-            @for (emp of employees(); track emp.id) {
+            @for (emp of filteredEmployees(); track emp.id) {
               <tr [class.row-selected]="emp.selected">
                 <td>
                   <div class="check-wrap">

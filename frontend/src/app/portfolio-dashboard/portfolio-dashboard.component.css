@@ -1,0 +1,141 @@
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.dashboard-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: transform 0.2s, border-color 0.2s;
+}
+
+.dashboard-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--border2);
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface2);
+}
+
+.emp-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--red-dim);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 0.9rem;
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+.emp-info {
+  flex: 1;
+}
+
+.emp-name {
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.emp-role {
+  font-size: 0.7rem;
+  color: var(--muted);
+  margin-top: 0.1rem;
+}
+
+.risk-score {
+  font-family: var(--font-head);
+  font-weight: 800;
+  font-size: 0.9rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 3px;
+}
+
+.risk-score.critical {
+  background: var(--red-dim);
+  color: var(--red);
+}
+
+.risk-score.high {
+  background: var(--amber-dim);
+  color: var(--amber);
+}
+
+.card-body {
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.status-badge {
+  font-size: 0.75rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 3px;
+  font-weight: 500;
+}
+
+.status-badge.matched {
+  background: var(--green-dim);
+  color: var(--green);
+}
+
+.status-badge.none {
+  background: var(--red-dim);
+  color: var(--red);
+}
+
+.match-summary {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.match-count-badge {
+  font-size: 0.75rem;
+  color: var(--subtle);
+}
+
+.card-footer {
+  padding: 0.75rem 1rem;
+  border-top: 1px solid var(--border);
+  text-align: right;
+}
+
+.btn-view {
+  color: var(--blue);
+  text-decoration: none;
+  font-size: 0.8rem;
+  font-weight: 500;
+  transition: color 0.15s;
+}
+
+.btn-view:hover {
+  color: var(--accent);
+  text-decoration: underline;
+}
+
+.nav-link {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.75rem;
+  margin-right: 1rem;
+}
+
+.nav-link:hover {
+  color: var(--text);
+}

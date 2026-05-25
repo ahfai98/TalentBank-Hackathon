@@ -763,3 +763,84 @@ input[type="range"]::-webkit-slider-thumb:hover {
 }
 
 .back-link:hover { color: var(--text); }
+
+/* Skill comparison */
+.skill-comparison {
+  margin-bottom: 1.2rem;
+}
+.comparison-bar {
+  height: 6px;
+  background: var(--border);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 0.4rem;
+}
+.match-bar {
+  height: 100%;
+  background: var(--green);
+  width: 0%;
+  transition: width 0.3s ease;
+}
+.comparison-stats {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.7rem;
+  color: var(--subtle);
+}
+.match-count { color: var(--green); }
+.missing-count { color: var(--red); }
+
+/* Gap items with course links */
+.gap-item {
+  margin-bottom: 0.6rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+.course-link, .course-loading {
+  background: none;
+  border: none;
+  font-size: 0.7rem;
+  color: var(--blue);
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0;
+}
+.course-loading { color: var(--muted); text-decoration: none; }
+
+/* HR Button */
+.btn-hr {
+  background: var(--blue-dim);
+  border: 1px solid var(--blue);
+  color: var(--blue);
+  padding: 0.3rem 0.8rem;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.btn-hr:hover:not(:disabled) {
+  background: var(--blue);
+  color: white;
+}
+.btn-hr:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Filter bar */
+.filter-bar input {
+  width: 100%;
+  padding: 0.6rem;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text);
+  font-family: var(--font-mono);
+}
+.filter-bar input:focus {
+  outline: none;
+  border-color: var(--blue);
+}
