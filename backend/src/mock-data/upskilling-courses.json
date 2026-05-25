@@ -1,0 +1,27 @@
+[
+  {
+    "skill": "Python",
+    "course": "Python for Data Science – 4 weeks",
+    "duration": "4 weeks"
+  },
+  {
+    "skill": "React",
+    "course": "React – The Complete Guide – 6 weeks",
+    "duration": "6 weeks"
+  },
+  {
+    "skill": "SQL",
+    "course": "SQL for Data Analysis – 3 weeks",
+    "duration": "3 weeks"
+  },
+  {
+    "skill": "Financial Modeling",
+    "course": "Financial Modeling Foundations – 5 weeks",
+    "duration": "5 weeks"
+  },
+  {
+    "skill": "Performance Management",
+    "course": "Performance Management Masterclass – 4 weeks",
+    "duration": "4 weeks"
+  }
+]

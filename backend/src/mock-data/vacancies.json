@@ -1,0 +1,34 @@
+[
+  {
+    "vacancyId": "V001",
+    "jobTitle": "Software Developer",
+    "department": "IT",
+    "description": "Develop and maintain web applications using React and Node.js. Participate in Agile ceremonies.",
+    "field": "Information Technology",
+    "requiredSkills": ["JavaScript", "React", "Node.js", "Git", "Agile"]
+  },
+  {
+    "vacancyId": "V002",
+    "jobTitle": "HR Business Partner",
+    "department": "HR",
+    "description": "Partner with business leaders on talent strategy. Handle employee relations and performance management.",
+    "field": "Human Resources",
+    "requiredSkills": ["Recruitment", "Employee Relations", "HRIS", "Labor Law", "Performance Management"]
+  },
+  {
+    "vacancyId": "V003",
+    "jobTitle": "Financial Analyst",
+    "department": "Finance",
+    "description": "Build financial models, analyse data and create reports. Work with large datasets using SQL and Python.",
+    "field": "Finance & Accounting",
+    "requiredSkills": ["Financial Modeling", "Excel", "SQL", "Python", "Data Analysis"]
+  },
+  {
+    "vacancyId": "V004",
+    "jobTitle": "IT Support Specialist",
+    "department": "IT",
+    "description": "Provide technical support to internal users. Troubleshoot Windows, networking and common software issues.",
+    "field": "Information Technology",
+    "requiredSkills": ["Troubleshooting", "Windows", "Networking", "Customer Service"]
+  }
+]

@@ -1,0 +1,141 @@
+<div class="page-shell">
+
+  <!-- Top nav -->
+  <nav class="topnav">
+    <div class="topnav-logo">⚠<span>Risk</span>Radar</div>
+    <div class="topnav-sep"></div>
+    <span class="topnav-crumb">Workforce Risk Assessment</span>
+    <div class="topnav-right">
+      <span class="badge-live">System Active</span>
+    </div>
+  </nav>
+
+  <main class="page-content fade-up">
+
+    <!-- Header -->
+    <div class="section-header">
+      <div class="section-eyebrow">Step 1 of 2 — Identification</div>
+      <h1 class="section-title">High-Risk Employees</h1>
+      <p class="section-sub">Employees whose roles are at elevated risk of AI displacement, ranked by risk score.</p>
+    </div>
+
+    <!-- Stats bar -->
+    @if (!loading()) {
+      <div class="stat-bar fade-up fade-up-1">
+        <div class="stat-item">
+          <span class="stat-label">Total Flagged</span>
+          <span class="stat-value danger">{{ employees().length }}</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">Critical (≥90%)</span>
+          <span class="stat-value danger">{{ criticalCount() }}</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">High (70–89%)</span>
+          <span class="stat-value warning">{{ highCount() }}</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">Selected</span>
+          <span class="stat-value">{{ selectedCount() }}</span>
+        </div>
+      </div>
+    }
+
+    <!-- Toolbar -->
+    <div class="toolbar fade-up fade-up-2">
+      <div class="toolbar-left">
+        <div class="check-wrap">
+          <input type="checkbox"
+            [checked]="allSelected()"
+            [indeterminate]="someSelected()"
+            (change)="toggleAll($event)">
+        </div>
+        <span class="select-count">
+          <strong>{{ selectedCount() }}</strong> of {{ employees().length }} selected
+        </span>
+      </div>
+      <div class="toolbar-right">
+        <button class="btn btn-ghost" (click)="loadEmployees()" [disabled]="loading()">
+          <span class="btn-icon">↺</span> Refresh
+        </button>
+        <button class="btn btn-primary" (click)="proceedToPortfolio()"
+          [disabled]="loading() || selectedCount() === 0">
+          <span class="btn-icon">→</span>
+          Generate Portfolios
+          @if (selectedCount() > 0) { ({{ selectedCount() }}) }
+        </button>
+      </div>
+    </div>
+
+    <!-- Table -->
+    <div class="table-container fade-up fade-up-3">
+
+      @if (loading()) {
+        <!-- Skeleton -->
+        @for (i of [1,2,3]; track i) {
+          <div class="skeleton-row">
+            <div class="skeleton" style="width:16px;height:16px;border-radius:3px"></div>
+            <div>
+              <div class="skeleton" style="height:13px;width:120px;margin-bottom:5px"></div>
+              <div class="skeleton" style="height:10px;width:60px"></div>
+            </div>
+            <div class="skeleton" style="height:12px;width:140px"></div>
+            <div class="skeleton" style="height:20px;width:70px;border-radius:3px"></div>
+            <div class="skeleton" style="height:4px;width:100%;border-radius:2px"></div>
+          </div>
+        }
+      } @else if (employees().length === 0) {
+        <div class="empty-state">
+          <div class="empty-icon">✓</div>
+          <div class="empty-title">No high-risk employees found</div>
+          <div class="empty-desc">All employees are in roles with low AI displacement risk.</div>
+        </div>
+      } @else {
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th style="width:48px"></th>
+              <th>Employee</th>
+              <th>Job Role</th>
+              <th>Risk Level</th>
+              <th>Risk Score</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (emp of employees(); track emp.id) {
+              <tr [class.row-selected]="emp.selected">
+                <td>
+                  <div class="check-wrap">
+                    <input type="checkbox" [(ngModel)]="emp.selected" (change)="onCheckChange()">
+                  </div>
+                </td>
+                <td>
+                  <div class="emp-name">{{ emp.name }}</div>
+                  <div class="emp-id">{{ emp.employeeId }}</div>
+                </td>
+                <td><span class="job-title">{{ emp.jobRole.title }}</span></td>
+                <td>
+                  <span class="risk-badge" [ngClass]="riskClass(emp.jobRole.riskScore)">
+                    {{ riskLabel(emp.jobRole.riskScore) }}
+                  </span>
+                </td>
+                <td>
+                  <div class="risk-bar-wrap">
+                    <div class="risk-bar-track">
+                      <div class="risk-bar-fill"
+                        [ngClass]="riskClass(emp.jobRole.riskScore)"
+                        [style.width.%]="emp.jobRole.riskScore">
+                      </div>
+                    </div>
+                    <span class="risk-bar-pct">{{ emp.jobRole.riskScore }}%</span>
+                  </div>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      }
+    </div>
+
+  </main>
+</div>

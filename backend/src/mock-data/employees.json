@@ -1,0 +1,32 @@
+[
+  {
+    "employeeId": "E001",
+    "name": "Alice Chen",
+    "jobTitle": "Data Analyst",
+    "cvText": "Experienced data analyst with strong SQL and Python skills. Proficient in Excel, Tableau and R. Led a project on customer churn prediction using machine learning."
+  },
+  {
+    "employeeId": "E002",
+    "name": "Bob Kumar",
+    "jobTitle": "Accountant",
+    "cvText": "Accountant with 5 years in bookkeeping and financial reporting. Expert in Excel and QuickBooks. Handled tax preparation for SME clients."
+  },
+  {
+    "employeeId": "E003",
+    "name": "Charlie Davis",
+    "jobTitle": "Software Developer",
+    "cvText": "Full-stack developer specialised in JavaScript, React and Node.js. Experience with Git and Agile methodologies. Built scalable web applications."
+  },
+  {
+    "employeeId": "E004",
+    "name": "Diana Lee",
+    "jobTitle": "HR Specialist",
+    "cvText": "HR generalist focusing on recruitment and employee relations. Familiar with HRIS systems and labour law compliance. Coordinated onboarding programmes."
+  },
+  {
+    "employeeId": "E005",
+    "name": "Eve Martinez",
+    "jobTitle": "Bookkeeping Clerk",
+    "cvText": "Detail-oriented bookkeeping clerk skilled in data entry, Excel and invoicing. Assisted with monthly reconciliations."
+  }
+]

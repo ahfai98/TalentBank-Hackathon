@@ -1,0 +1,105 @@
+# ===============================
+#  OS / Editor / Temp files
+# ===============================
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+*.tmp
+*.temp
+.cache
+.history
+
+# ===============================
+#  IDE / Editor folders
+# ===============================
+.vscode/
+.idea/
+.project
+.classpath
+.settings/
+*.sublime-*
+
+# ===============================
+#  Node.js / NPM
+# ===============================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# ===============================
+#  Build outputs
+# ===============================
+/dist
+/build
+/out-tsc
+/tmp
+/.angular
+coverage/
+.nyc_output/
+
+# ===============================
+#  Environment & secrets
+# ===============================
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.cert
+
+# ===============================
+#  Database (SQLite)
+# ===============================
+*.sqlite
+*.sqlite3
+*.db
+
+# ===============================
+#  Backend specific (NestJS)
+# ===============================
+backend/dist
+backend/node_modules
+backend/.env
+backend/db.sqlite
+backend/coverage
+
+# ===============================
+#  Frontend specific (Angular)
+# ===============================
+frontend/dist
+frontend/node_modules
+frontend/.angular
+frontend/.env
+
+# ===============================
+#  Docker / volumes
+# ===============================
+*.log
+docker-compose.override.yml
+!docker-compose.override.example.yml
+/data
+/volumes
+
+# ===============================
+#  Testing artifacts
+# ===============================
+/coverage
+/test-results
+junit.xml
+.nyc_output
+
+# ===============================
+#  Misc
+# ===============================
+*.pid
+*.seed
+*.pid.lock
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json

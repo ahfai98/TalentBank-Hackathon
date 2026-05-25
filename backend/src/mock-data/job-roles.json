@@ -1,0 +1,50 @@
+[
+  {
+    "title": "Data Analyst",
+    "field": "Data & Analytics",
+    "isHighRisk": true,
+    "riskScore": 65
+  },
+  {
+    "title": "Accountant",
+    "field": "Finance & Accounting",
+    "isHighRisk": true,
+    "riskScore": 90
+  },
+  {
+    "title": "Bookkeeping Clerk",
+    "field": "Finance & Accounting",
+    "isHighRisk": true,
+    "riskScore": 92
+  },
+  {
+    "title": "Software Developer",
+    "field": "Information Technology",
+    "isHighRisk": false,
+    "riskScore": null
+  },
+  {
+    "title": "HR Specialist",
+    "field": "Human Resources",
+    "isHighRisk": false,
+    "riskScore": null
+  },
+  {
+    "title": "HR Business Partner",
+    "field": "Human Resources",
+    "isHighRisk": false,
+    "riskScore": null
+  },
+  {
+    "title": "Financial Analyst",
+    "field": "Finance & Accounting",
+    "isHighRisk": false,
+    "riskScore": null
+  },
+  {
+    "title": "IT Support Specialist",
+    "field": "Information Technology",
+    "isHighRisk": false,
+    "riskScore": null
+  }
+]

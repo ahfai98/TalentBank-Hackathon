@@ -1,0 +1,221 @@
+<div class="page-shell">
+
+  <!-- Top nav -->
+  <nav class="topnav">
+    <div class="topnav-logo">⚠<span>Risk</span>Radar</div>
+    <div class="topnav-sep"></div>
+    <span class="topnav-crumb">Auto-Portfolio Generation</span>
+    <div class="topnav-right">
+      <span class="badge-live">System Active</span>
+    </div>
+  </nav>
+
+  <main class="page-content">
+
+    <button class="back-link" (click)="goBack()">
+      ← Back to employee list
+    </button>
+
+    <!-- Header -->
+    <div class="section-header fade-up">
+      <div class="section-eyebrow">Step 2 of 2 — Portfolio</div>
+      <h1 class="section-title">Redeployment Portfolios</h1>
+      <p class="section-sub">
+        {{ entries().length }} employee{{ entries().length !== 1 ? 's' : '' }} analysed for internal redeployment opportunities.
+      </p>
+    </div>
+
+    <!-- Summary stat bar -->
+    @if (entries().length > 0 && !anyLoading()) {
+      <div class="stat-bar fade-up fade-up-1">
+        <div class="stat-item">
+          <span class="stat-label">Analysed</span>
+          <span class="stat-value">{{ entries().length }}</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">Matches Found</span>
+          <span class="stat-value success">{{ matchedCount() }}</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">No Match</span>
+          <span class="stat-value danger">{{ noMatchCount() }}</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">Same-Field</span>
+          <span class="stat-value">{{ sameFieldCount() }}</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">Cross-Role</span>
+          <span class="stat-value">{{ crossRoleCount() }}</span>
+        </div>
+      </div>
+    }
+
+    <!-- Per-employee portfolio cards -->
+    @if (entries().length === 0) {
+      <div class="empty-state fade-up">
+        <div class="empty-icon">⚠</div>
+        <div class="empty-title">No employees selected</div>
+        <div class="empty-desc">Go back and select at least one employee to generate portfolios.</div>
+      </div>
+    }
+
+    <div class="portfolio-grid">
+      @for (entry of entries(); track entry.employeeId; let i = $index) {
+        <div class="portfolio-card" [style.animation-delay]="(i * 0.08) + 's'">
+
+          <!-- Card header -->
+          <div class="portfolio-card-head">
+            <div class="portfolio-card-avatar">{{ initials(entry) }}</div>
+            <div class="portfolio-card-info">
+              <div class="portfolio-card-name">
+                {{ entry.portfolio?.employeeName ?? entry.employeeId }}
+              </div>
+              <div class="portfolio-card-meta">
+                {{ entry.portfolio?.currentJob ?? '—' }}
+                @if (entry.portfolio) {
+                  &nbsp;·&nbsp;
+                  <span [ngClass]="entry.portfolio.type === 'same-field' ? 'type-same-field' : 'type-cross-role'"
+                        class="type-tag">
+                    {{ entry.portfolio.type === 'same-field' ? '⟳ Same Field' : '⇄ Cross-Role' }}
+                  </span>
+                }
+              </div>
+            </div>
+            @if (!entry.loading && entry.portfolio) {
+              <div style="text-align:right;">
+                <div style="font-size:0.65rem;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.2rem;">Matches</div>
+                <div style="font-family:var(--font-head);font-weight:800;font-size:1.4rem;"
+                  [style.color]="entry.portfolio.matches.length > 0 ? 'var(--green)' : 'var(--red)'">
+                  {{ entry.portfolio.matches.length }}
+                </div>
+              </div>
+            }
+          </div>
+
+          <!-- Card body -->
+          <div class="portfolio-card-body">
+
+            @if (entry.loading) {
+              <!-- Loading state -->
+              <div style="display:flex;align-items:center;gap:0.75rem;padding:1rem 0;color:var(--muted);font-size:0.8rem;">
+                <div class="skeleton" style="width:20px;height:20px;border-radius:50%"></div>
+                Extracting skills and generating portfolio…
+              </div>
+            } @else if (entry.error) {
+              <div class="nomatch-panel">
+                <div style="color:var(--red);font-size:0.85rem;font-weight:600;">⚠ Error</div>
+                <p>{{ entry.error }}</p>
+              </div>
+            } @else if (entry.portfolio) {
+
+              <!-- Threshold slider -->
+              <div class="threshold-row">
+                <span class="threshold-label">Match Threshold</span>
+                <input type="range" min="0" max="100" step="5"
+                  [ngModel]="entry.threshold"
+                  (ngModelChange)="onThresholdChange(entry.employeeId, $event)">
+                <span class="threshold-value">{{ entry.threshold }}%</span>
+              </div>
+
+              <!-- No match state -->
+              @if (entry.portfolio.matches.length === 0) {
+                <div class="nomatch-panel">
+                  <div style="font-size:1.5rem;margin-bottom:0.5rem;">🔍</div>
+                  <div style="font-family:var(--font-head);font-weight:700;font-size:0.9rem;color:var(--subtle);">
+                    No viable internal roles found
+                  </div>
+                  <p>No matches at {{ entry.threshold }}% threshold. Try lowering the threshold, or consider an external upskilling plan.</p>
+                  <div style="margin-top:1rem;">
+                    <span class="pill pill-missing">Outplacement Support</span>
+                    &nbsp;
+                    <span class="pill pill-neutral">External Upskilling</span>
+                  </div>
+                </div>
+              } @else {
+                <!-- Match list -->
+                <div class="match-list">
+                  @for (match of entry.portfolio.matches; track match.vacancy.id; let mi = $index) {
+                    <div class="match-card" [class.expanded]="isExpanded(entry.employeeId, mi)">
+
+                      <!-- Match header (clickable) -->
+                      <div class="match-card-head" (click)="toggleMatch(entry.employeeId, mi)">
+                        <!-- Ring chart -->
+                        <div class="match-pct-ring">
+                          <svg viewBox="0 0 44 44" width="44" height="44">
+                            <circle class="ring-bg" cx="22" cy="22" r="18"/>
+                            <circle class="ring-fg"
+                              cx="22" cy="22" r="18"
+                              [attr.stroke]="ringColor(match.matchPercent)"
+                              [attr.stroke-dasharray]="circumference"
+                              [attr.stroke-dashoffset]="ringOffset(match.matchPercent)"/>
+                          </svg>
+                          <div class="match-pct-label">{{ match.matchPercent | number:'1.0-0' }}%</div>
+                        </div>
+
+                        <div class="match-info">
+                          <div class="match-title">{{ match.vacancy.jobTitle }}</div>
+                          <div class="match-dept">{{ match.vacancy.department }}</div>
+                        </div>
+
+                        <div style="display:flex;align-items:center;gap:0.75rem;">
+                          <span class="pill" [ngClass]="matchPillClass(match.matchPercent)">
+                            {{ matchPillLabel(match.matchPercent) }}
+                          </span>
+                          <span class="match-expand-icon">▾</span>
+                        </div>
+                      </div>
+
+                      <!-- Match body (expanded) -->
+                      <div class="match-card-body">
+
+                        <!-- Matching skills -->
+                        @if (match.matchingSkills.length > 0) {
+                          <div class="skill-section">
+                            <div class="skill-section-label">✓ Matching Skills ({{ match.matchingSkills.length }})</div>
+                            <div class="skill-pills">
+                              @for (skill of match.matchingSkills; track skill) {
+                                <span class="pill pill-match">{{ skill }}</span>
+                              }
+                            </div>
+                          </div>
+                        }
+
+                        <!-- Missing skills + courses -->
+                        @if (match.missingSkills.length > 0) {
+                          <div class="skill-section">
+                            <div class="skill-section-label">✗ Skill Gaps ({{ match.missingSkills.length }})</div>
+                            <div style="display:flex;flex-direction:column;gap:0.4rem;">
+                              @for (skill of match.missingSkills; track skill) {
+                                <div>
+                                  <span class="pill pill-missing">{{ skill }}</span>
+                                  @if (getCourse(entry, skill); as course) {
+                                    <div class="course-chip">
+                                      📚 {{ course.courseName }}
+                                      <span style="opacity:0.6;">· {{ course.duration }}</span>
+                                    </div>
+                                  } @else if (getCourse(entry, skill) === undefined) {
+                                    <div class="course-chip" style="opacity:0.5;">
+                                      ⏳ Loading course…
+                                    </div>
+                                  }
+                                </div>
+                              }
+                            </div>
+                          </div>
+                        }
+
+                      </div>
+                    </div>
+                  }
+                </div>
+              }
+
+            }
+          </div>
+        </div>
+      }
+    </div>
+
+  </main>
+</div>
